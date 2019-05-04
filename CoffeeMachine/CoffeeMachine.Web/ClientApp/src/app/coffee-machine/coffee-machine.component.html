@@ -44,3 +44,7 @@
   <button type="submit" [disabled]="isValid()" class="btn btn-primary">Confirm</button>
 
 </form>
+
+<div *ngIf="isWinner" class="text-center">
+  <h1>Congratulation you are WIN!</h1>
+</div>

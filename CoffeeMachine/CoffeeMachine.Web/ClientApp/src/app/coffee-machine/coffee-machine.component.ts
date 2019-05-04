@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MachineService } from '../machine.service';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { DrinkService } from '../services/drink.services';
+import { DrinkType } from '../models/drink-type';
+import { OrderService } from '../services/order.services';
 
 @Component({
   selector: 'app-coffee-machine',
@@ -11,19 +12,15 @@ import { DrinkService } from '../services/drink.services';
 export class CoffeeMachineComponent implements OnInit {
   machineForm: FormGroup;
   drinkTypes: DrinkType[];
+  isWinner: boolean;
 
-  constructor(private fb: FormBuilder, private machineService: MachineService, private drinkService: DrinkService) { }
+  constructor(private fb: FormBuilder, private orderService: OrderService, private drinkService: DrinkService) { }
 
   ngOnInit() {
     // Test
     this.drinkService.getDrinks().subscribe(t => {
       this.drinkTypes = t;
     })
-    //this.drinkTypes = [
-    //  { "Name": "caffe", "Price" : 1 },
-    //  { "Name": "cappuccino", "Price": 1.4 },
-    //  { "Name": "te", "Price": 0.8}
-    //];
 
     this.machineForm = this.fb.group({
       selectedDrink: ['', Validators.required],
@@ -35,9 +32,9 @@ export class CoffeeMachineComponent implements OnInit {
 
   selectDrinkType(value) {
     const drinkPrice = value.Price;
-    const coinInserted = this.machineForm['coinInserted'] !== undefined ? this.machineForm['coinInserted'].value : 0 ;
+    const coinInserted = this.machineForm.controls['coinInserted'] !== undefined ? this.machineForm.controls['coinInserted'].value : 0 ;
     const coinDifference = Math.round((coinInserted - drinkPrice) * 100) / 100;
-    this.machineForm.controls['selectedDrink'].setValue(value.Name);
+    this.machineForm.controls['selectedDrink'].setValue(value.CodDrink);
     this.machineForm.controls['drinkPrice'].setValue(value.Price);
     this.machineForm.controls['coinDifference'].setValue(coinDifference);
   }
@@ -55,12 +52,16 @@ export class CoffeeMachineComponent implements OnInit {
   }
 
   onSubmit() {
-
+    this.isWinner = false;
+    this.orderService.insertOrder({
+      DrinkSelected: this.machineForm.controls['selectedDrink'].value,
+      CoinInserted: this.machineForm.controls['coinInserted'].value
+    }).subscribe({
+      next: (r: any) => {
+        this.isWinner = r.IsWinner;
+        this.machineForm.controls['coinDifference'].setValue(r.Rest);
+      }
+    });
   }
 }
 
-export class DrinkType {
-  CodDrink: string;
-  Name: string;
-  Price: number;
-}

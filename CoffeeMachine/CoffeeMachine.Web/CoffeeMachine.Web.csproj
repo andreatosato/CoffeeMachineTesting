@@ -29,7 +29,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\models\drink-type.ts" />
+    <None Remove="ClientApp\src\app\models\order-history.ts" />
+    <None Remove="ClientApp\src\app\models\order.ts" />
     <None Remove="ClientApp\src\app\services\drink.services.ts" />
+    <None Remove="ClientApp\src\app\services\order.services.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,7 +41,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\models\drink-type.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\order-history.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\order.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\drink.services.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\order.services.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

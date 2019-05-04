@@ -1,5 +1,6 @@
 ﻿using CoffeeMachine.Logic.Domain;
 using CoffeeMachine.Logic.EF;
+using CoffeeMachine.Logic.ReadModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,25 @@ namespace CoffeeMachine.Logic.Services
             };
             db.Add(orderEntity);
             await db.SaveChangesAsync();
+        }
+
+        public async Task<OrderSummaryReadModel> GetOrdersHistories()
+        {
+            var orderNumbers = await db.Orders.CountAsync();
+            var ordersByDate = await db.Orders
+                .GroupBy(x => x.OrderDate.Date)
+                .Select(x => new { Date = x.Key, Count = x.Count(), Sold = x.Sum(t => t.Drink.Price) })
+                .ToListAsync();
+            return new OrderSummaryReadModel
+            {
+                TotalOrders = orderNumbers,
+                SummaryByDate = ordersByDate.Select(x => new OrderSummaryByDayReadModel
+                {
+                    Date = x.Date,
+                    TotalOrders = x.Count,
+                    Sold = x.Sold
+                })
+            };
         }
 
         public async Task<IEnumerable<Drink>> GetDrinkAvailableAsync()

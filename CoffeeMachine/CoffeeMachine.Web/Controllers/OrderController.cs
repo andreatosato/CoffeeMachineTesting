@@ -31,19 +31,27 @@ namespace CoffeeMachine.Web.Controllers
                 Drink drinkSelected = null;
                 switch (orderViewModel.DrinkSelected)
                 {
-                    case "coffee":
+                    case "COFFEE":
                         drinkSelected = new Coffee();
                         break;
-                    case "te":
+                    case "THE":
                         drinkSelected = new The();
                         break;
-                    case "cappuccino":
+                    case "CAPPUCCINO":
                         drinkSelected = new Cappuccino();
                         break;
                 }
-                await _orderService.CreateOrderAsync(new Logic.Domain.Order(drinkSelected, orderViewModel.CoinInserted));
+                var order = new Logic.Domain.Order(drinkSelected, orderViewModel.CoinInserted);
+                await _orderService.CreateOrderAsync(order);
+                return Ok(new PostOrderResultViewModel { Rest = order.Rest, IsWinner = order.IsWinner });
             }
-            return Ok();
+            return BadRequest(ModelState);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetHistory()
+        {
+            return Ok(await _orderService.GetOrdersHistories());
         }
     }
 }
