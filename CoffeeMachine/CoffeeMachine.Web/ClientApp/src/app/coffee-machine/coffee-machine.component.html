@@ -2,10 +2,10 @@
   <div class="row">
     <div *ngFor="let drinkType of drinkTypes" (click)="selectDrinkType(drinkType)" class="col-sm-4">
       <div class="card">
-        <span [ngSwitch]="drinkType.Name">
-          <img src="../../assets/caffe.jpg" class="card-img-top" style="max-height:200px" *ngSwitchCase="'caffe'">
-          <img src="../../assets/cappuccino.jpg" class="card-img-top" style="max-height:200px" *ngSwitchCase="'cappuccino'">
-          <img src="../../assets/te.jpg" class="card-img-top" style="max-height:200px" *ngSwitchCase="'te'">
+        <span [ngSwitch]="drinkType.CodDrink">
+          <img src="../../assets/caffe.jpg" class="card-img-top" style="max-height:200px" *ngSwitchCase="'COFFEE'">
+          <img src="../../assets/cappuccino.jpg" class="card-img-top" style="max-height:200px" *ngSwitchCase="'CAPPUCCINO'">
+          <img src="../../assets/te.jpg" class="card-img-top" style="max-height:200px" *ngSwitchCase="'THE'">
         </span>
         <div class="card-body">
           <h5 class="card-title text-center">{{drinkType.Name}}</h5>
@@ -20,11 +20,6 @@
       <div class="form-group">
         <label for="drinkSelected">Drink Selected</label>
         <input type="text" class="form-control" formControlName="selectedDrink" id="drinkSelected" [readonly]="true" />
-        <div *ngIf="selectedDrink?.invalid && (selectedDrink.dirty || selectedDrink.touched)" class="alert alert-danger">
-          <div *ngIf="selectedDrink.errors.required">
-            Must select drink
-          </div>
-        </div>
       </div>
     </div>
     <div class="col-sm-4">
@@ -44,11 +39,6 @@
   <div class="form-group">
     <label for="coinInserted">Insert Coins</label>
     <input type="number" class="form-control" min="0" step="0.05" id="coinInserted" placeholder="Insert coins please" formControlName="coinInserted" (change)="coinInsert($event)">
-    <div *ngIf="coinInserted?.invalid && (coinInserted.dirty || coinInserted.touched)" class="alert alert-danger">
-      <div *ngIf="coinInserted.errors.required">
-        Must insert coin
-      </div>
-    </div>
   </div>
 
   <button type="submit" [disabled]="isValid()" class="btn btn-primary">Confirm</button>

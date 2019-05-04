@@ -7,6 +7,11 @@ namespace CoffeeMachine.Logic.EF
 {
     public class DemoContext : DbContext
     {
+        public DemoContext(DbContextOptions options)
+            : base(options)
+        {
+            Database.EnsureCreated();
+        }
         public DbSet<OrderEntity> Orders { get; set; }
         public DbSet<DrinkEntity> Drinks { get; set; }
 

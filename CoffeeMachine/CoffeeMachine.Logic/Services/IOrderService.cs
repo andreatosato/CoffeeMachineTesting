@@ -9,5 +9,6 @@ namespace CoffeeMachine.Logic.Services
     public interface IOrderService
     {
         Task CreateOrderAsync(Order order);
+        Task<IEnumerable<Drink>> GetDrinkAvailableAsync();
     }
 }

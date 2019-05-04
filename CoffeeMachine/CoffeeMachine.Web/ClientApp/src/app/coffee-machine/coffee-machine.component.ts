@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MachineService } from '../machine.service';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { DrinkService } from '../services/drink.services';
 
 @Component({
   selector: 'app-coffee-machine',
@@ -11,15 +12,18 @@ export class CoffeeMachineComponent implements OnInit {
   machineForm: FormGroup;
   drinkTypes: DrinkType[];
 
-  constructor(private fb: FormBuilder, private machineService: MachineService) { }
+  constructor(private fb: FormBuilder, private machineService: MachineService, private drinkService: DrinkService) { }
 
   ngOnInit() {
     // Test
-    this.drinkTypes = [
-      { "Name": "caffe", "Price" : 1 },
-      { "Name": "cappuccino", "Price": 1.4 },
-      { "Name": "te", "Price": 0.8}
-    ];
+    this.drinkService.getDrinks().subscribe(t => {
+      this.drinkTypes = t;
+    })
+    //this.drinkTypes = [
+    //  { "Name": "caffe", "Price" : 1 },
+    //  { "Name": "cappuccino", "Price": 1.4 },
+    //  { "Name": "te", "Price": 0.8}
+    //];
 
     this.machineForm = this.fb.group({
       selectedDrink: ['', Validators.required],
@@ -56,6 +60,7 @@ export class CoffeeMachineComponent implements OnInit {
 }
 
 export class DrinkType {
+  CodDrink: string;
   Name: string;
   Price: number;
 }

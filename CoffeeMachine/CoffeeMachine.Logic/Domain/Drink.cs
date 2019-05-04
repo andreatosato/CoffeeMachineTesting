@@ -17,9 +17,14 @@ namespace CoffeeMachine.Logic.Domain
             DrinkName = drinkName;
         }
 
-        public decimal Price { get; }
+        public decimal Price { get; private set; }
         public string CodDrink { get; }
         public string DrinkName { get; }
+
+        public void SetPrice(decimal price)
+        {
+            Price = price;
+        }
     }
 
     public class Coffee : Drink
