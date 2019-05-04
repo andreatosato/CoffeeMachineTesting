@@ -46,6 +46,10 @@ export class CoffeeMachineComponent implements OnInit {
     this.machineForm.controls['coinDifference'].setValue(coinDifference);
   }
 
+  isValid(): boolean {
+    return !this.machineForm.valid || this.machineForm.controls['coinDifference'].value < 0;
+  }
+
   onSubmit() {
 
   }
