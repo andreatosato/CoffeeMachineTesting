@@ -6,11 +6,11 @@ namespace CoffeeMachine.Logic.Domain
 {
     public class Order
     {
-        public Order(Drink drink, decimal paid)
+        public Order(Drink drink, decimal paid, bool? isWinner = null)
         {
             Drink = drink;
             Paid = paid;
-            IsWinner = CalculateWinner();
+            IsWinner = isWinner ?? CalculateWinner();
             if ((Paid - Drink.Price) < 0)
                 throw new ArgumentOutOfRangeException($"Not enough money for paid {Drink.CodDrink}");
             else
@@ -27,7 +27,7 @@ namespace CoffeeMachine.Logic.Domain
         public decimal Rest { get; }
         public bool IsWinner { get; }
 
-        public bool CalculateWinner()
+        private bool CalculateWinner()
         {
             return true;
         }
