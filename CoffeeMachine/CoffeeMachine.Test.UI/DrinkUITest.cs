@@ -1,6 +1,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace CoffeeMachine.Test.UI
@@ -15,6 +16,7 @@ namespace CoffeeMachine.Test.UI
         {
             IWebDriver driver = new ChromeDriver(System.IO.Directory.GetCurrentDirectory());
             driver.Navigate().GoToUrl(baseAddressCoffeeMachine);
+            Task.Delay(2000).Wait();
             // Seleziono il caffè
             var drinks = driver.FindElements(By.ClassName("card"));
             drinks[0].Click();
@@ -35,6 +37,7 @@ namespace CoffeeMachine.Test.UI
         {
             IWebDriver driver = new ChromeDriver(System.IO.Directory.GetCurrentDirectory());
             driver.Navigate().GoToUrl(baseAddressCoffeeMachine);
+            Task.Delay(2000).Wait();
             // Seleziono il caffè
             var drinks = driver.FindElements(By.ClassName("card"));
             drinks[1].Click();
@@ -55,6 +58,7 @@ namespace CoffeeMachine.Test.UI
         {
             IWebDriver driver = new ChromeDriver(System.IO.Directory.GetCurrentDirectory());
             driver.Navigate().GoToUrl(baseAddressCoffeeMachine);
+            Task.Delay(2000).Wait();
             // Seleziono il caffè
             var drinks = driver.FindElements(By.ClassName("card"));
             drinks[2].Click();

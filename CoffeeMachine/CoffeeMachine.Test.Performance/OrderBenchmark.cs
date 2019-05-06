@@ -6,12 +6,7 @@ namespace CoffeeMachine.Test.Performance
 {
     [MemoryDiagnoser]
     [DryJob]
-    //[JsonExporterAttribute.Brief]
-    //[JsonExporterAttribute.Full]
-    //[JsonExporterAttribute.BriefCompressed]
-    //[JsonExporterAttribute.FullCompressed]
     [AllStatisticsColumn]
-    //[JsonExporter("-order", indentJson: true, excludeMeasurements: false)]
     public class OrderBenchmark
     {
         [GlobalSetup]
