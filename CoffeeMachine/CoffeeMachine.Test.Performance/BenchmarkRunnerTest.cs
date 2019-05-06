@@ -10,7 +10,7 @@ namespace CoffeeMachine.Test.Performance
         [Fact]
         public void OrderBenchmark_Ctor_Runner()
         {
-            var summary = BenchmarkRunner.Run<OrderBenchmark>();
+            BenchmarkRunner.Run<OrderBenchmark>();
         }
     }
 }

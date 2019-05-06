@@ -29,7 +29,7 @@ namespace CoffeeMachine.Logic.Domain
 
         private bool CalculateWinner()
         {
-            return true;
+            return new Random().Next(1, 1000) < 5 && new Random().Next(1, 1000) > 95;
         }
     }
 }
