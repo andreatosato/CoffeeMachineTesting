@@ -5,8 +5,8 @@ const baseUrl = "https://loadtestingazure.azurewebsites.net/";
 
 export let options = {
     stages: [
-        {duration: "60s", target: 100},
-        {duration: "40s", target: 150},
+        {duration: "40s", target: 100},
+        {duration: "100s", target: 250},
         {duration: "60s", target: 20},
     ],
     thresholds: {
@@ -24,10 +24,30 @@ export default function() {
     });
 
     group("drink-api", function() {
-        let res = http.get(baseUrl + 'drink');
+        let res = http.get(baseUrl + 'api/drink');
         check(res, {
             "is status 200": (r) => r.status === 200
         });
+        
+        check(res, {
+            "is drinks values": (r) => {
+                let result = true;
+                let data = JSON.parse(r.body);
+                
+                for (let index = 0; index < data.length; index++) {
+                    if(index === 0)
+                        result = data[index].DrinkType === 'COFFEE';
+                    if(index === 1)
+                        result = data[index].DrinkType === 'THE';
+                    if(index === 2)
+                        result = data[index].DrinkType === 'CAPPUCCINO';
+                    if(result === false)               
+                        return result;
+                }
+                return result;
+            }
+        });
+        
         sleep(5);
     });
 }
